@@ -4,10 +4,18 @@
 	<title>Star Wars Guess</title>
 </head>
 <body>
-	<button onclick="api();">Click!</button>
-	<p id="title"></p>
-	<p id="randomized"></p>
+	<button onclick="api();">Scrambled SW Movie Title</button>
+	<p>Randomized title: <div id="randomized"></div></p>
+	<p>Title: <div id="title"></div></p>
 
+    <style>
+        #title{
+            color: white;
+        }
+        #title:hover{
+            color:blue;
+        }
+    </style>
     <script type="text/javascript">
         function api(){
             fetch('http://127.0.0.1:8080/api/')
@@ -16,8 +24,8 @@
                     return res.json();})
                 .then((json)=>{
                     console.log(json);
-                    document.getElementById('title').innerHTML = "Title: " + json['title']
-                    document.getElementById('randomized').innerHTML = "Randomized title: " + json['rand'];
+                    document.getElementById('title').innerHTML = json['title']
+                    document.getElementById('randomized').innerHTML = json['rand'];
                 })
         }
     </script>

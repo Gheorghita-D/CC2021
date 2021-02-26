@@ -1,10 +1,10 @@
 var http = require('http');
 var https = require('https');
 var fs = require('fs')
-var querystring = require('querystring');
-const { randomInt } = require('crypto');
+
 var logs = []
-var apiKey = "whyisthishere"
+var apiKey = ""
+
 http.createServer(function (req, res) {
     
 	if(req.url == '/'){
@@ -99,16 +99,13 @@ http.createServer(function (req, res) {
                                         // console.log(randTitle1);
 
                                         res.on('finish',()=>{
-                                            latency = (Date.now() - startTime)/1000;
+                                            var latency = (Date.now() - startTime)/1000;
                                             logs.push({"request": req, "response": res, "latency": latency})
-                                            // fs.readFile('logs.json', function(err, data4) {
-                                            //     if (err) throw err;
-                                            //     data4 = JSON.parse(data4)
-                                            //     data4.push({"response": {"title": title1, "rand": randTitle1}, "latency": latency})
-                                            //     fs.writeFile("logs.json", JSON.stringify(data4), (err) => {
-                                            //         if (err) throw err;
-                                            //     })
-                                            // })
+                                            var data4 = JSON.parse(fs.readFileSync('logs.json'))
+                                            data4.push({"response": {"title": title1, "rand": randTitle1}, "latency": latency})
+                                            fs.writeFileSync("logs.json", JSON.stringify(data4), (err) => {
+                                                if (err) throw err;
+                                            })
                                         })
                                         res.write(JSON.stringify({"title": title1, "rand": randTitle1}));
                                         res.end();
@@ -144,6 +141,34 @@ http.createServer(function (req, res) {
                 });	
                 //console.log(logs)
 				
+        }
+        if(req.url == '/metrics/min/'){
+            fs.readFile('logs.json', function(err, data) {
+            if (err) throw err;
+            objs = JSON.parse(data)
+            min = 1000
+            for(i=0; i<objs.length; i++){
+                if(objs[i]["latency"] < min) min = objs[i]["latency"]
+            }
+            
+            res.write(JSON.stringify(min))
+            res.end()
+            });	
+            
+        }
+        if(req.url == '/metrics/max/'){
+            fs.readFile('logs.json', function(err, data) {
+            if (err) throw err;
+            objs = JSON.parse(data)
+            max = -1
+            for(i=0; i<objs.length; i++){
+                if(objs[i]["latency"] > max) max = objs[i]["latency"]
+            }
+            
+            res.write(JSON.stringify(max))
+            res.end()
+            });	
+            
         }
 	}
 }).listen(8080);
