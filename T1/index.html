@@ -7,6 +7,8 @@
 	<button onclick="api();">Scrambled SW Movie Title</button>
 	<p>Randomized title: <div id="randomized"></div></p>
 	<p>Title: <div id="title"></div></p>
+    <button onclick="metrics();">Metrics</button>
+    <p id="metrics"></p>
 
     <style>
         #title{
@@ -26,6 +28,16 @@
                     console.log(json);
                     document.getElementById('title').innerHTML = json['title']
                     document.getElementById('randomized').innerHTML = json['rand'];
+                })
+        }
+        function metrics(){
+            fetch('http://127.0.0.1:8080/metrics/')
+                .then((res)=>{
+                    console.log(res);
+                    return res.json();})
+                .then((json)=>{
+                    console.log(json);
+                    document.getElementById('metrics').innerHTML = JSON.stringify(json)
                 })
         }
     </script>

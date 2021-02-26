@@ -102,7 +102,7 @@ http.createServer(function (req, res) {
                                             var latency = (Date.now() - startTime)/1000;
                                             logs.push({"request": req, "response": res, "latency": latency})
                                             var data4 = JSON.parse(fs.readFileSync('logs.json'))
-                                            data4.push({"response": {"title": title1, "rand": randTitle1}, "latency": latency})
+                                            data4.push({"request": "http://127.0.0.1:8080" + req.url, "response": {"title": title1, "rand": randTitle1}, "latency": latency})
                                             fs.writeFileSync("logs.json", JSON.stringify(data4), (err) => {
                                                 if (err) throw err;
                                             })
@@ -134,6 +134,8 @@ http.createServer(function (req, res) {
             req2.end();
         }
 		if(req.url == '/metrics/'){
+                res.setHeader('Access-Control-Allow-Origin', '*');
+                res.writeHead(200, {'Content-Type': 'application/json'});
 				fs.readFile('logs.json', function(err, data) {
 			    if (err) throw err;
 			    res.write(JSON.stringify(JSON.parse(data)))
