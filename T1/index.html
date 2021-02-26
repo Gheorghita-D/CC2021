@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Star Wars Guess</title>
+</head>
+<body>
+	<button onclick="api();">Click!</button>
+	<p id="title"></p>
+	<p id="randomized"></p>
+
+    <script type="text/javascript">
+        function api(){
+            fetch('http://127.0.0.1:8080/api/')
+                .then((res)=>{
+                    console.log(res);
+                    return res.json();})
+                .then((json)=>{
+                    console.log(json);
+                    document.getElementById('title').innerHTML = "Title: " + json['title']
+                    document.getElementById('randomized').innerHTML = "Randomized title: " + json['rand'];
+                })
+        }
+    </script>
+
+</body>
+</html>
