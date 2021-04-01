@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>SimpleChat - Login</title>
+	<link rel="stylesheet" type="text/css" href="/public/css/login.css">
+	<link rel="preconnect" href="https://fonts.gstatic.com">
+	<link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+    <div class="login-form">
+        <form action="/login" method="post">
+            <div class="alert alert-danger" id="errors" style="display: none;"></div>
+            <h2 class="text-center">Log in</h2>       
+            <div class="form-group">
+                <input type="text" class="form-control" name="username" placeholder="Username" required="required">
+            </div>
+            <div class="form-group">
+                <input type="password" class="form-control" placeholder="Password" name="password" required="required">
+            </div>
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary btn-block">Log in</button>
+            </div>    
+        </form>
+        <p class="text-center"><a href="/signup">Create an Account</a></p>
+    </div>
+    <script type="text/javascript">
+        var url_string = window.location.href;
+        var url = new URL(url_string);
+        var error_code = url.searchParams.get("error_code") || 0;
+
+        if(parseInt(error_code) > 0){
+            if(parseInt(error_code) == 1){
+                $('#errors').show();
+                $('#errors').text('Error: Incorrect username or password');
+            }
+        }
+
+    </script>
+</body>
+</html>
