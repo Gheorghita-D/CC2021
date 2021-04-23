@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>SimpleChat</title>
+	<link rel="stylesheet" type="text/css" href="/public/css/chat.css">
+	<link rel="preconnect" href="https://fonts.gstatic.com">
+	<link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body>
+	<div class="nav-header">
+		<div class="nav-header-left">Welcome, <%= currentUsername %></div>
+		<div class="nav-header-right">
+			<button class="logout-btn" onclick="window.location.href='/logout'">Logout</button>
+		</div>
+	</div>
+	<main id="leftSide">
+		<div id="name"></div>
+		<div id="conv"></div>
+		<div id="send">
+			<input type="text" placeholder="Type a message" id="send_msg">
+			<button id="send_btn">Send</button>
+			<button id="send_img"><i class="fa fa-picture-o" aria-hidden="true"></i></button>
+		</div>
+		<div id="imagesPanel">
+			<input id="imageSearch" type="text" placeholder="Search images">
+			<div id="loadingGif"></div>
+			<div id="imageResults"></div>
+		</div>
+	</main>
+	<aside>
+		<div class="members-title">Members</div>
+		<div id="members"></div>
+	</aside>
+	<input type="hidden" id="currentToken" value="<%= currentToken %>">
+	<input type="hidden" id="currentUsername" value="<%= currentUsername %>">
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<script type="text/javascript" src="/public/js/chat.js"></script>
+</body>
+</html>
